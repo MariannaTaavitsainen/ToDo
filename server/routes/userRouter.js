@@ -1,12 +1,20 @@
 import { Router } from 'express' 
-import { compare, hash } from 'bcrypt' 
-import jwt from 'jsonwebtoken' 
-import { pool } from '../helper/db.js' 
- 
-const { sign } = jwt 
+//import { compare, hash } from 'bcrypt' 
+//import jwt from 'jsonwebtoken' 
+//import { pool } from '../helper/db.js' 
+ import {signUp, signIn} from '../controllers/UserController.js'
+
+
+
+//const { sign } = jwt 
 const router = Router() 
- 
-router.post('/signup', async (req, res, next) => { 
+
+router.post('/signup', signUp)
+router.post('/signin', signIn)
+
+export default router
+
+/*router.post('/signup', async (req, res, next) => { 
   try { 
     const email = req.body.user?.email?.trim().toLowerCase() 
     const password = req.body.user?.password 
@@ -16,7 +24,7 @@ router.post('/signup', async (req, res, next) => {
       return next(error) 
     } 
 
-    const hashedPassword = await hash(password, 10) 
+   /* const hashedPassword = await hash(password, 10) 
     const result = await pool.query( 
       'INSERT INTO account (email, password) VALUES ($1, $2) RETURNING id, email', 
       [email, hashedPassword], 
@@ -58,6 +66,5 @@ router.post('/signin', async (req, res, next) => {
         return next(error)
     }
 })
-    
+    */
 
-export default router
